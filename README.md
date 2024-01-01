@@ -1,5 +1,5 @@
 # seungchan0325's baekjoon
 
 
-## file format
+## filename format
 ```{PROBLEM_NUMBER}_{INDEX}.{FILE_EXTENSTION}```

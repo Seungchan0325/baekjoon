@@ -22,4 +22,3 @@ int main() {
 
     cout<<x_min_idx+1<<" "<<y_min_idx+1;
 }
-Unknown problem. sumbmit number: 55648716

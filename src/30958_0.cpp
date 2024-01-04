@@ -21,4 +21,3 @@ int main()
 
     cout << *max_element(cnt, cnt + 26);
 }
-Unknown problem. sumbmit number: 70423210

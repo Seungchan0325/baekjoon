@@ -5,4 +5,3 @@ int main() {
     cin >> n;
     cout << "WelcomeToSMUPC"[(n-1) % 14];
 }
-Unknown problem. sumbmit number: 66315696

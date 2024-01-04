@@ -9,4 +9,3 @@ int main() {
         cout << a * (x - 1) + b << "\n";
     }
 }
-Unknown problem. sumbmit number: 67047207

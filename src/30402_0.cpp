@@ -20,4 +20,3 @@ int main() {
             }
     }
 }
-Unknown problem. sumbmit number: 68541244

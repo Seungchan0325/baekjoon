@@ -9,4 +9,3 @@ for i in queue[m:]:
         cnt += 1
 
 print(cnt)
-Unknown problem. sumbmit number: 66014268

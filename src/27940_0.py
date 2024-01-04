@@ -16,4 +16,3 @@ if turning:
     print(ans, mi)
 else:
     print(-1)
-Unknown problem. sumbmit number: 58997038

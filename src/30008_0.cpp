@@ -19,4 +19,3 @@ int main() {
         else cout << 9 << " ";
     }
 }
-Unknown problem. sumbmit number: 67047668

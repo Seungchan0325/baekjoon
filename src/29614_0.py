@@ -34,4 +34,3 @@ while s:
         sum += 0
         
 print(sum / cnt)
-Unknown problem. sumbmit number: 66013314

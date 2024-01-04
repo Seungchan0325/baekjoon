@@ -22,4 +22,3 @@ int main()
     }
     cout << cnt;
 }
-Unknown problem. sumbmit number: 70672456

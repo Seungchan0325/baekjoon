@@ -28,7 +28,7 @@ int main()
                 jinju = cost;
                 flag = true;
             }
-            if(cost <= 0xffffULL) v.push_back(cost);
+            if(cost <= 1000) v.push_back(cost);
             else cnt++;
         }
     }
@@ -40,4 +40,3 @@ int main()
 
     cout << cnt;
 }
-Unknown problem. sumbmit number: 70673016

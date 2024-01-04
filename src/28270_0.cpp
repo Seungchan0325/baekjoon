@@ -41,4 +41,3 @@ int main() {
     else
         for(int i=0; i<n; i++) cout<<arr[i]<<" ";
 }
-Unknown problem. sumbmit number: 62472169

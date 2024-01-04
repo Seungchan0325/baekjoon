@@ -7,4 +7,3 @@ dict = {
 
 s = input()
 print(dict[s])
-Unknown problem. sumbmit number: 62185166

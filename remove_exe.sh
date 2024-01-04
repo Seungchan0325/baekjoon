@@ -1,2 +1,2 @@
 #!/bin/sh
-find . -maxdepth 1 -type f -executable ! -name "*.sh" -delete
+find . -maxdepth 2 -type f -executable ! -name "*.sh" -delete

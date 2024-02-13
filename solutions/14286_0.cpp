@@ -33,7 +33,6 @@ int main()
                 if(par[v] == -1 && c[u][v] - f[u][v] > 0) {
                     q.push(v); par[v] = u;
                 }
-
             }
         }
         if(par[t] == -1) break;

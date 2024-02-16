@@ -12,6 +12,8 @@ pair<ll, ll> src[MAXM], dst[MAXN];
 
 int main()
 {
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+
     cin >> m;
     for(ll i = 0; i < m; i++) {
         cin >> src[i].first >> src[i].second;
@@ -22,23 +24,21 @@ int main()
     }
 
     sort(dst, dst + n);
-    for(ll i = 0; i < m; i++) {
-        for(ll j = 0; j < n; j++) {
-            ll dx = dst[j].first - src[i].first;
-            ll dy = dst[j].second - src[i].second;
-            bool is_possible = true;
-            for(ll k = 0; k < m; k++) {
-                ll nx = src[k].first + dx;
-                ll ny = src[k].second + dy;
-                if(!binary_search(dst, dst + n, make_pair(nx, ny))) {
-                    is_possible = false;
-                    break;
-                }
+    for(ll j = 0; j < n; j++) {
+        ll dx = dst[j].first - src[0].first;
+        ll dy = dst[j].second - src[0].second;
+        bool is_possible = true;
+        for(ll k = 1; k < m; k++) {
+            ll nx = src[k].first + dx;
+            ll ny = src[k].second + dy;
+            if(!binary_search(dst, dst + n, make_pair(nx, ny))) {
+                is_possible = false;
+                break;
             }
-            if(is_possible) {
-                cout << dx << " " << dy << "\n";
-                return 0;
-            }
+        }
+        if(is_possible) {
+            cout << dx << " " << dy << "\n";
+            return 0;
         }
     }
 }

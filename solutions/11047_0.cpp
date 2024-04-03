@@ -18,5 +18,5 @@ int main()
         cnt += k / a[i];
         k %= a[i];
     }
-    cout <<
+    cout << cnt;
 }

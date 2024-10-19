@@ -46,7 +46,7 @@ struct cmp {
 
 const int MAXN = 2005;
 
-int N;
+ll N;
 Point p[MAXN];
 
 int main()

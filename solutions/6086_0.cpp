@@ -4,7 +4,7 @@ using namespace std;
 
 struct G {
     int N;
-    vector<vector<int>> graph ;
+    vector<vector<int>> graph;
     vector<unordered_map<int, int>> c;
     G(int N) : N(N), graph(N+1), c(N+1) {}
 

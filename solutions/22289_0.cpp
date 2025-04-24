@@ -1,3 +1,7 @@
+// #pragma GCC optimize("O3")
+// #pragma GCC optimize("Ofast")
+// #pragma GCC optimize("unroll-loops")
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -27,7 +31,7 @@ void fft(vec& f, cpx w)
 
 vec mul(vec a, vec b)
 {
-    int n = max(bit_ceil(a.size()), bit_ceil(b.size()));
+    int n = 2 * max(bit_ceil(a.size()), bit_ceil(b.size()));
     a.resize(n); b.resize(n);
     vec c(n);
 
@@ -49,24 +53,42 @@ using ll = long long;
 
 int main()
 {
-    int n;
-    cin >> n;
-    vec a(n), b(n);
-    for(int i = 0; i < n; i++) {
-        int v; cin >> v;
-        a[i] = cpx(v, 0);
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+
+    string _a, _b;
+    cin >> _a >> _b;
+    if(_a == "0" || _b == "0") {
+        cout << "0";
+        return 0;
     }
-    for(int i = 0; i < n; i++) {
-        int v; cin >> v;
-        b[i] = cpx(v, 0);
+    if(ssize(_a)&1) _a = "0" + _a;
+    if(ssize(_b)&1) _b = "0" + _b;
+    vec a, b;
+    for(int i = 0, j = 0; i < _a.size(); i+=2, j++) {
+        a.push_back(0);
+        a[j] = 10*(_a[i] - '0') + (_a[i+1] - '0');
     }
-    a.insert(a.end(), a.begin(), a.end());
+    
+    for(int i = 0, j = 0; i < _b.size(); i+=2, j++) {
+        b.push_back(0);
+        b[j] = 10*(_b[i] - '0') + (_b[i+1] - '0');
+    }
+    
+    reverse(a.begin(), a.end());
     reverse(b.begin(), b.end());
-     auto c = mul(a, b);
-    ll ans = 0;
-    for(auto i : c) {
-        // cout << i.real() << " " << i.imag() << "\n";
-        ans = max<ll>(ans, i.real());
+    auto c = mul(a, b);
+    vector<long long> ans;
+    long long carry = 0;
+    for(int i = 0; i < c.size() || carry; i++) {
+        ans.push_back(0);
+        if(i < c.size()) ans[i] += c[i].real();
+        ans[i] += carry;
+
+        carry = ans[i] / 100;
+        ans[i] %= 100;
     }
-    cout << ans;
+    int i = ssize(ans) - 1;
+    while(ans[i] == 0) i--;
+    cout << ans[i--];
+    for(; i >= 0; i--) cout << setfill('0') << setw(2) << ans[i];
 }

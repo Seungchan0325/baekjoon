@@ -1,12 +1,27 @@
+
 #include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
 
 using namespace std;
+using namespace __gnu_pbds;
 
 using ll = long long;
 
 const ll mod = 998244353;
+const int MAXN = 24;
 
-map<tuple<int, int, array<int, 20>>, ll> cache;
+struct VectorHasher {
+    size_t operator()(const std::array<char, MAXN>& v) const {
+        size_t hash = v.size();
+        for (char i : v) {
+            hash ^= i + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+        }
+        return hash;
+    }
+};
+
+ll inv[130];
+gp_hash_table<array<char, MAXN>, ll, VectorHasher> cache[MAXN][MAXN];
 
 ll pw(ll x, ll n)
 {
@@ -19,53 +34,60 @@ ll pw(ll x, ll n)
     return ans;
 }
 
-// ll pw(ll x, ll n)
-// {
-//     if(n == 0) return 1;
-//     if(n&1) return x * pw(x, n-1) % mod;
-//     ll half = pw(x, n/2);
-//     return half * half % mod;
-// }
-
-int N, M, X, Y, H[122];
-
-ll dp(int n, int y, array<int, 20> s, int sum)
+ll dp(int n, int y, array<char, MAXN>& s)
 {
-    sum -= s[0];
-    s[0] = 0;
     if(y == 0) return 1;
-    if(n == 0) return 0;
-    if(cache.contains(tuple(n, y, s))) return cache[tuple(n, y, s)];
-    ll& ret = cache[tuple(n, y, s)];
-    for(int i = 1; i < 20; i++) {
-        if(s[i]) {
-            s[i]--;
-            s[i-1]++;
-            ret = (ret + dp(n-1, y, s, sum)) % mod;
-            s[i]++;
-            s[i-1]--;
-        }
+    if(n < y) return 0;
+    
+    int p0 = s[0];
+    int pnp2 = s[n+2];
+    s[0] = 0;
+    s[n+1] += s[n+2];
+    s[n+2] = 0;
+
+    if(auto it = cache[n][y].find(s); it != cache[n][y].end()) {
+        s[0] = p0;
+        s[n+1] -= pnp2;
+        s[n+2] = pnp2;
+        return it->second;
     }
-    ret = (ret + dp(n-1, y-1, s, sum)) % mod;
-    ret = ret * pw(sum, mod-2) % mod;
+    
+    ll& ret = cache[n][y][s] = 0;
+    int sum = 1;
+    for(int i = 1; i <= n+1; i++) {
+        sum += s[i];
+        s[i]--; s[i-1]++;
+        ret = (ret + (s[i]+1) * dp(n-1, y, s) % mod) % mod;
+        s[i]++; s[i-1]--;
+    }
+
+    ret = (ret + dp(n-1, y-1, s)) % mod;
+    ret = ret * inv[sum] % mod;
+    
+    s[0] = p0;
+    s[n+1] -= pnp2;
+    s[n+2] = pnp2;
     return ret;
 }
 
 int main()
 {
-    cin >> N >> M >> X >> Y;
-    for(int i = 1; i <= M; i++) cin >> H[i], H[i] = (H[i] + X - 1) / X;
-    Y = (Y + X - 1) / X;
-    array<int, 20> a = {};
-    for(int i = 1; i <= M; i++) {
-        if(H[i] < 20) a[H[i]]++;
-    }
-    ll ans = dp(N, Y, a, M+1);
-    cout << ans << "\n";
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
 
-    for(auto [k, i] : cache) {
-        cout << get<0>(k) << " " << get<1>(k) << " [";
-        for(auto j : get<2>(k)) cout << j << ", ";
-        cout << "] = " << i << "\n";
+    for(int i = 1; i < 130; i++) inv[i] = pw(i, mod-2);
+    
+    int N, M, X, Y;
+    cin >> N >> M >> X >> Y;
+    
+    array<char, MAXN> s = {};
+    for(int i = 1; i <= M; i++) {
+        int h; cin >> h;
+        h = (h + X - 1) / X;
+        if(h <= N) s[h]++;
+        else s[N+1]++;
     }
+    Y = (Y + X - 1) / X;
+
+    ll ans = dp(N, Y, s);
+    cout << ans << "\n";
 }

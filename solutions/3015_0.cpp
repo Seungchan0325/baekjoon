@@ -2,22 +2,22 @@
 
 using namespace std;
 
-using pii = pair<int, int>;
 using ll = long long;
+using pii = pair<ll, ll>;
 
-const int INF = INT_MAX;
+const ll INF = 1e18;
 
-int n, h[500001];
+ll n, h[500001];
 stack<pii> s;
 
 int main() {
     ios_base::sync_with_stdio(false); cin.tie(NULL);
     cin>>n;
-    for(int i = 0; i < n; i++) cin>>h[i];
+    for(ll i = 0; i < n; i++) cin>>h[i];
 
     ll sum = 0;
     s.push({INF, -1});
-    for(int i = 0; i < n; i++) {
+    for(ll i = 0; i < n; i++) {
         while(s.top().first < h[i]) {
             sum += s.top().second;
             s.pop();
